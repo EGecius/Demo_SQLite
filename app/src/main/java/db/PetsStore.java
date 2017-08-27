@@ -1,3 +1,5 @@
+package db;
+
 import com.egecius.demo_sqlite.Pet;
 
 import java.util.List;
