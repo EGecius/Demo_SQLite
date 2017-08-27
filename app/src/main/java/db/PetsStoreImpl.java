@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.egecius.demo_sqlite.Pet;
 
@@ -50,28 +51,42 @@ public class PetsStoreImpl implements PetsStore {
 		Cursor cursor = db.query(TABLE_NAME, /*all columns*/ null, /* all rows*/ null, null, null,
 				null, null);
 
-		Pet pet = extractPetFromCursor(cursor);
+		int rowCount = cursor.getCount();
+		int columnCount = cursor.getColumnCount();
 
-		// TODO: 27/08/2017 return full list
+		Log.i("Eg:PetsStoreImpl:56", "read rowCount " + rowCount);
+		Log.i("Eg:PetsStoreImpl:58", "read columnCount " + columnCount);
 
-		ArrayList<Pet> petsList = new ArrayList<>();
-		petsList.add(pet);
-
-		return petsList;
+		return extractPetsFromCursor(cursor);
 	}
 
-	private Pet extractPetFromCursor(final Cursor cursor) {
+	private List<Pet> extractPetsFromCursor(final Cursor cursor) {
 		cursor.moveToFirst();
 
-		int id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID));
-		String name = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME));
-		int breed = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_BREED));
-		int gender = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_GENDER));
-		int weight = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_WEIGHT));
+		int rowCount = cursor.getCount();
+
+
+		ArrayList<Pet> petList = new ArrayList<>(rowCount);
+
+		for (int i = 0; i < rowCount; i++) {
+
+			int id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID));
+			String name = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME));
+			int breed = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_BREED));
+			int gender = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_GENDER));
+			int weight = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_WEIGHT));
+
+			if (i < rowCount - 1) {
+				cursor.moveToNext();
+			}
+
+			Pet pet = new Pet(id, name, breed, gender, weight);
+			petList.add(pet);
+		}
 
 		cursor.close();
 
-		return new Pet(id, name, breed, gender, weight);
+		return petList;
 	}
 
 	@Override
