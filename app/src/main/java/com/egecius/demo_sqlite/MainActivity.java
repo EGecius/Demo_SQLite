@@ -24,6 +24,12 @@ public class MainActivity extends AppCompatActivity {
 
 		initStore();
 		addSinglePet();
+//		updatePet();
+	}
+
+	private void updatePet() {
+		Log.v("Eg:MainActivity:32", "updatePet");
+		petsStore.update(new Pet(2, "jorke", YORKSHIRE, FEMALE, 10));
 	}
 
 	private void setupButton() {

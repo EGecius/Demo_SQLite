@@ -99,6 +99,7 @@ public class PetsStoreImpl implements PetsStore {
 	@Override
 	public void update(final Pet pet) {
 
+		// TODO: 27/08/2017 update - this does not work yet
 		ContentValues values = createContentValues(pet);
 
 		String id = String.valueOf(pet.id);
