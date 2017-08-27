@@ -3,12 +3,13 @@ package db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
-import static db.PetsContract.PetsEntry.COLLUMN_BREED;
-import static db.PetsContract.PetsEntry.COLLUMN_GENDER;
-import static db.PetsContract.PetsEntry.COLLUMN_ID;
-import static db.PetsContract.PetsEntry.COLLUMN_NAME;
-import static db.PetsContract.PetsEntry.COLLUMN_WEIGHT;
+import static db.PetsContract.PetsEntry.COLUMN_BREED;
+import static db.PetsContract.PetsEntry.COLUMN_GENDER;
+import static db.PetsContract.PetsEntry.COLUMN_ID;
+import static db.PetsContract.PetsEntry.COLUMN_NAME;
+import static db.PetsContract.PetsEntry.COLUMN_WEIGHT;
 import static db.PetsContract.PetsEntry.TABLE_NAME;
 
 /**
@@ -27,11 +28,13 @@ public class PetsDbHelper extends SQLiteOpenHelper {
 	public void onCreate(final SQLiteDatabase db) {
 
 		String SQL_CREATE_COMMAND = "CREATE TABLE " + TABLE_NAME + "(" +
-				COLLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-				COLLUMN_NAME + " TEXT NOT NULL, " +
-				COLLUMN_BREED + "breed INTEGER, " +
-				COLLUMN_GENDER + "gender INTEGER NOT NULL, " +
-				COLLUMN_WEIGHT + "weight INTEGER DEFAULT 0)";
+				COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+				COLUMN_NAME + " TEXT NOT NULL, " +
+				COLUMN_BREED + "breed INTEGER, " +
+				COLUMN_GENDER + "gender INTEGER NOT NULL, " +
+				COLUMN_WEIGHT + "weight INTEGER DEFAULT 0)";
+
+		Log.i("Eg:PetsDbHelper:36", "onCreate SQL_CREATE_COMMAND " + SQL_CREATE_COMMAND);
 
 		db.execSQL(SQL_CREATE_COMMAND);
 	}

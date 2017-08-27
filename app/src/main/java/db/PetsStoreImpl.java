@@ -11,17 +11,17 @@ import com.egecius.demo_sqlite.Pet;
 import java.util.ArrayList;
 import java.util.List;
 
-import static db.PetsContract.PetsEntry.COLLUMN_BREED;
-import static db.PetsContract.PetsEntry.COLLUMN_GENDER;
-import static db.PetsContract.PetsEntry.COLLUMN_ID;
-import static db.PetsContract.PetsEntry.COLLUMN_NAME;
-import static db.PetsContract.PetsEntry.COLLUMN_WEIGHT;
+import static db.PetsContract.PetsEntry.COLUMN_BREED;
+import static db.PetsContract.PetsEntry.COLUMN_GENDER;
+import static db.PetsContract.PetsEntry.COLUMN_ID;
+import static db.PetsContract.PetsEntry.COLUMN_NAME;
+import static db.PetsContract.PetsEntry.COLUMN_WEIGHT;
 import static db.PetsContract.PetsEntry.TABLE_NAME;
 
 /**
  * Stores pets information in a database
  */
-class PetsStoreImpl implements PetsStore {
+public class PetsStoreImpl implements PetsStore {
 
 	private final SQLiteDatabase db;
 
@@ -32,16 +32,16 @@ class PetsStoreImpl implements PetsStore {
 	@Override
 	public void add(final Pet pet) {
 		ContentValues values = createContentValues(pet);
-		db.insert(TABLE_NAME, null, values);
+		db.insert(TABLE_NAME, /*nullColumnHack*/ null, values);
 	}
 
 	@NonNull
 	private ContentValues createContentValues(final Pet pet) {
 		ContentValues values = new ContentValues();
-		values.put(COLLUMN_NAME, pet.name);
-		values.put(COLLUMN_BREED, pet.breed);
-		values.put(COLLUMN_GENDER, pet.gender);
-		values.put(COLLUMN_WEIGHT, pet.weight);
+		values.put(COLUMN_NAME, pet.name);
+		values.put(COLUMN_BREED, pet.breed);
+		values.put(COLUMN_GENDER, pet.gender);
+		values.put(COLUMN_WEIGHT, pet.weight);
 		return values;
 	}
 
@@ -63,11 +63,11 @@ class PetsStoreImpl implements PetsStore {
 	private Pet extractPetFromCursor(final Cursor cursor) {
 		cursor.moveToFirst();
 
-		int id = cursor.getInt(cursor.getColumnIndexOrThrow(COLLUMN_ID));
-		String name = cursor.getString(cursor.getColumnIndexOrThrow(COLLUMN_NAME));
-		int breed = cursor.getInt(cursor.getColumnIndexOrThrow(COLLUMN_BREED));
-		int gender = cursor.getInt(cursor.getColumnIndexOrThrow(COLLUMN_GENDER));
-		int weight = cursor.getInt(cursor.getColumnIndexOrThrow(COLLUMN_WEIGHT));
+		int id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID));
+		String name = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME));
+		int breed = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_BREED));
+		int gender = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_GENDER));
+		int weight = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_WEIGHT));
 
 		cursor.close();
 
@@ -78,7 +78,7 @@ class PetsStoreImpl implements PetsStore {
 	public void remove(final Pet pet) {
 		String id = String.valueOf(pet.id);
 		String[] petIdValue = {id};
-		db.delete(TABLE_NAME, COLLUMN_ID, petIdValue);
+		db.delete(TABLE_NAME, COLUMN_ID, petIdValue);
 	}
 
 	@Override
@@ -88,6 +88,6 @@ class PetsStoreImpl implements PetsStore {
 
 		String id = String.valueOf(pet.id);
 		String[] petIdValue = {id};
-		db.update(TABLE_NAME, values, COLLUMN_ID, petIdValue);
+		db.update(TABLE_NAME, values, COLUMN_ID, petIdValue);
 	}
 }
