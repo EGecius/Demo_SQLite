@@ -5,15 +5,17 @@ package com.egecius.demo_sqlite;
  */
 public class Pet {
 
-	private final int id;
-	private final String name;
-	private final int breed;
-	private final int weight;
+	public final int id;
+	public final String name;
+	public final int breed;
+	public final int gender;
+	public final int weight;
 
-	public Pet(final int id, final String name, final int breed, final int weight) {
+	public Pet(final int id, final String name, final int breed, final int gender, final int weight) {
 		this.id = id;
 		this.name = name;
 		this.breed = breed;
+		this.gender = gender;
 		this.weight = weight;
 	}
 
@@ -26,6 +28,7 @@ public class Pet {
 
 		if (id != pet.id) return false;
 		if (breed != pet.breed) return false;
+		if (gender != pet.gender) return false;
 		if (weight != pet.weight) return false;
 		return name != null ? name.equals(pet.name) : pet.name == null;
 
@@ -36,6 +39,7 @@ public class Pet {
 		int result = id;
 		result = 31 * result + (name != null ? name.hashCode() : 0);
 		result = 31 * result + breed;
+		result = 31 * result + gender;
 		result = 31 * result + weight;
 		return result;
 	}
@@ -46,6 +50,7 @@ public class Pet {
 				"id=" + id +
 				", name='" + name + '\'' +
 				", breed=" + breed +
+				", gender=" + gender +
 				", weight=" + weight +
 				'}';
 	}
