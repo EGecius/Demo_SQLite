@@ -30,9 +30,9 @@ public class PetsDbHelper extends SQLiteOpenHelper {
 		String SQL_CREATE_COMMAND = "CREATE TABLE " + TABLE_NAME + "(" +
 				COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				COLUMN_NAME + " TEXT NOT NULL, " +
-				COLUMN_BREED + "breed INTEGER, " +
-				COLUMN_GENDER + "gender INTEGER NOT NULL, " +
-				COLUMN_WEIGHT + "weight INTEGER DEFAULT 0)";
+				COLUMN_BREED + " INTEGER, " +
+				COLUMN_GENDER + " INTEGER NOT NULL, " +
+				COLUMN_WEIGHT + " INTEGER DEFAULT 0)";
 
 		Log.i("Eg:PetsDbHelper:36", "onCreate SQL_CREATE_COMMAND " + SQL_CREATE_COMMAND);
 
